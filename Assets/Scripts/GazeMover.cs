@@ -22,6 +22,8 @@ public class GazeMover : MonoBehaviour
 
     [SerializeField] private TextMesh m_text;
 
+    private int stupidCounter = 0;
+
     //==============================================================================
     // MonoBehaviours
     //==============================================================================
@@ -61,6 +63,12 @@ public class GazeMover : MonoBehaviour
             if (desiredPosition != m_Camera.transform.position)
             {
                 m_Camera.transform.position = Vector3.MoveTowards(m_Camera.transform.position, desiredPosition, distance*m_speed);
+                stupidCounter++;
+                if (stupidCounter>60)
+                {
+                    m_isMoving = false;
+                    stupidCounter = 0;
+                }
             } else {
                 m_isMoving = false;
             }
