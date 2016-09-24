@@ -20,6 +20,9 @@ public class GazeMover : MonoBehaviour
     private Vector3 m_moveDirection;
     [SerializeField] private float m_speed;
 
+    [SerializeField] private TextMesh m_text;
+
+
     //==============================================================================
     // MonoBehaviours
     //==============================================================================
@@ -38,6 +41,8 @@ public class GazeMover : MonoBehaviour
         m_moveDirection = Vector3.zero;
 
         m_Camera = FindObjectOfType<OVRManager>().GetComponent<Transform>();
+
+        m_text.GetComponent<Renderer>().enabled = false;
     }
 
     public void Update()
@@ -53,10 +58,10 @@ public class GazeMover : MonoBehaviour
         if (m_isMoving)
         {
             Vector3 desiredPosition = m_moveTo.transform.position;
-            float distance = Vector3.Distance(desiredPosition, transform.position);
-            if (desiredPosition != transform.position)
+            float distance = Vector3.Distance(desiredPosition, m_Camera.transform.position);
+            if (desiredPosition != m_Camera.transform.position)
             {
-                transform.position = Vector3.MoveTowards(transform.position, desiredPosition, distance);
+                m_Camera.transform.position = Vector3.MoveTowards(m_Camera.transform.position, desiredPosition, distance*m_speed);
             } else {
                 m_isMoving = false;
             }
@@ -72,12 +77,14 @@ public class GazeMover : MonoBehaviour
     public void OnGazeStart()
     {
         m_isLookedAt = true;
+        m_text.GetComponent<Renderer>().enabled = true;
     }
 
     //==============================================================================
     public void OnGazeEnd()
     {
         m_isLookedAt = false;
+        m_text.GetComponent<Renderer>().enabled = false;
     }
 
 
