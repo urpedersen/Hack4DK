@@ -1,0 +1,12 @@
+<Model globalCoordinateSystem="+proj=geocent +ellps=WGS84 +no_defs" globalCoordinateSystemName="local:1 - Euclidean"
+   exportCoordinateSystemType="0" transformToPreserved="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1">
+  <transformToModel>1 0 0 0 0 -0.0391837397754335 -0.999231691953114 16.8087924814109 0 0.999231691953114 -0.0391837397754335 -5.00016005828797 0 0 0 1</transformToModel>
+  <Header magic="5786959" version="1"/>
+</Model>
+<ModelExport exportBinary="0" exportInfoFile="1" exportVertices="1" exportVertexColors="2"
+   exportVertexNormals="0" exportTriangles="1" exportTexturing="0" meshColor="4294967295"
+   tileType="0" exportTextureAlpha="0" exportToOneTexture="0" oneTextureMaxSide="0"
+   oneTextureUsePow2TexSide="0" exportCoordinateSystemType="0" settingsAnchor="0 0 0"
+   settingsScalex="1" settingsScaley="1" settingsScalez="1" texturesFileType="bmp">
+  <Header magic="5786949" version="1"/>
+</ModelExport>
