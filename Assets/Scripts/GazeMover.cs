@@ -52,7 +52,14 @@ public class GazeMover : MonoBehaviour
 
         if (m_isMoving)
         {
-           
+            Vector3 desiredPosition = m_moveTo.transform.position;
+            float distance = Vector3.Distance(desiredPosition, transform.position);
+            if (desiredPosition != transform.position)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, desiredPosition, distance);
+            } else {
+                m_isMoving = false;
+            }
         }
 
     }
