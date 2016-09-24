@@ -114,7 +114,6 @@ public class KHVR_Reticle : MonoBehaviour {
             yield return new WaitForSeconds(0.05f);
         }
         m_LoadReticle.material.SetFloat("_Cutoff", 1);
-    }
-    */
+    }*/
 
 }

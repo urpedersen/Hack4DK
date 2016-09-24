@@ -29,7 +29,8 @@ public class GetTextureFromUrl : MonoBehaviour {
         if (m_IsReady) {
             if (Time.timeSinceLevelLoad > m_NextTriggerTime) { 
                 FetchImage();
-                m_NextTriggerTime = Time.timeSinceLevelLoad + m_RetriggerTime;
+                int random = Random.Range(0, 3);
+                m_NextTriggerTime = Time.timeSinceLevelLoad + m_RetriggerTime + random;
             }
         }
     }

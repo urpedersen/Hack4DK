@@ -7,7 +7,8 @@ public class Rotation : MonoBehaviour {
     // Fields
     //==============================================================================
 
-    private float m_Speed = 4f;
+        [SerializeField]
+    private float m_Speed = 8f;
     private float m_Rotation = 0;
 
     //==============================================================================
