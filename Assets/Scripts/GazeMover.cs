@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ColorOnGaze : MonoBehaviour
+
+
+public class GazeMover : MonoBehaviour
 {
 
     //==============================================================================
     // Fields
     //==============================================================================
 
-    [SerializeField]
-    private Color m_HoverColor = Color.red;
-
-    [SerializeField]
-    private Color m_DefaultColor = Color.white;
-
     private GazeBase m_GazeBase;
-    private Renderer m_Renderer;
+    private Transform m_Camera;
+    [SerializeField] private Transform m_moveTo;
+
+    private bool m_isMoving;
+    private bool m_isLookedAt;
+
+    private Vector3 m_moveDirection;
+    [SerializeField] private float m_speed;
 
     //==============================================================================
     // MonoBehaviours
@@ -24,13 +27,34 @@ public class ColorOnGaze : MonoBehaviour
     //==============================================================================
     public void Start()
     {
-        
+
         m_GazeBase = GetComponent<GazeBase>();
-        m_Renderer = GetComponent<Renderer>();
         m_GazeBase.onGazeBeginCallBack += OnGazeStart;
         m_GazeBase.onGazeEndCallBack += OnGazeEnd;
 
-        SetColor(m_DefaultColor);
+        m_isMoving = false;
+        m_isLookedAt = false;
+
+        m_moveDirection = Vector3.zero;
+
+        m_Camera = FindObjectOfType<OVRManager>().GetComponent<Transform>();
+    }
+
+    public void Update()
+    {
+        
+        if (Input.GetMouseButtonDown(0) & m_isLookedAt)
+        {
+            Debug.Log("Pressed left click.");
+           // m_moveDirection = transform.TransformDirection(m_GazeBase);
+            m_isMoving = true;
+        }
+
+        if (m_isMoving)
+        {
+           
+        }
+
     }
 
     //==============================================================================
@@ -38,21 +62,16 @@ public class ColorOnGaze : MonoBehaviour
     //==============================================================================
 
     //==============================================================================
-    public void OnGazeStart() {
-        SetColor(m_HoverColor);
-
+    public void OnGazeStart()
+    {
+        m_isLookedAt = true;
     }
 
     //==============================================================================
     public void OnGazeEnd()
     {
-        SetColor(m_DefaultColor);
+        m_isLookedAt = false;
     }
 
 
-    //==============================================================================
-    public void SetColor(Color c)
-    {
-        m_Renderer.material.SetColor("_Color",c);
-    }
 }
