@@ -22,7 +22,6 @@ public class GazeMover : MonoBehaviour
 
     [SerializeField] private TextMesh m_text;
 
-
     //==============================================================================
     // MonoBehaviours
     //==============================================================================
@@ -77,6 +76,8 @@ public class GazeMover : MonoBehaviour
     public void OnGazeStart()
     {
         m_isLookedAt = true;
+
+        // Display text
         m_text.GetComponent<Renderer>().enabled = true;
     }
 
@@ -84,6 +85,8 @@ public class GazeMover : MonoBehaviour
     public void OnGazeEnd()
     {
         m_isLookedAt = false;
+
+        // Remove text
         m_text.GetComponent<Renderer>().enabled = false;
     }
 
