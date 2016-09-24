@@ -20,7 +20,6 @@ public class GazeBase : MonoBehaviour {
     //==============================================================================
 
     public delegate void GazeEventHandler();
-    public GazeEventHandler onCompleteGazeCallBack;
     public GazeEventHandler onGazeBeginCallBack;
     public GazeEventHandler onGazeEndCallBack;
 
@@ -41,13 +40,10 @@ public class GazeBase : MonoBehaviour {
     
     //==============================================================================
     public void StartGaze(){
-
         if (onGazeBeginCallBack != null)
         {
             onGazeBeginCallBack();
         }
-
-        StartCoroutine(StartGazeCorutine());
     }
 
     //==============================================================================
@@ -74,26 +70,6 @@ public class GazeBase : MonoBehaviour {
         if (m_Gaze != null)
         {
             m_Gaze.RegisterGazeObject(this.transform, this);
-        }
-    }
-
-    //==============================================================================
-    private IEnumerator StartGazeCorutine() {
-
-        float time = 0;
-
-        while (time < 1f) {
-            time = time + 0.1f;
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        OnGazeComplete();
-    }
-
-    //==============================================================================
-    private void OnGazeComplete() {
-        if (onCompleteGazeCallBack != null) {
-            onCompleteGazeCallBack();
         }
     }
 }
