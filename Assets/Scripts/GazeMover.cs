@@ -17,6 +17,8 @@ public class GazeMover : MonoBehaviour
     private bool m_isMoving;
     private bool m_isLookedAt;
 
+    private ScreenFade m_ScreenFade;
+
     private Vector3 m_moveDirection;
     [SerializeField] private float m_speed;
 
@@ -34,7 +36,7 @@ public class GazeMover : MonoBehaviour
         m_GazeBase = GetComponent<GazeBase>();
         m_GazeBase.onGazeBeginCallBack += OnGazeStart;
         m_GazeBase.onGazeEndCallBack += OnGazeEnd;
-
+        m_ScreenFade = FindObjectOfType<ScreenFade>();
         m_isMoving = false;
         m_isLookedAt = false;
 
@@ -49,14 +51,16 @@ public class GazeMover : MonoBehaviour
     public void Update()
     {
         
-        if (Input.GetMouseButtonDown(0) & m_isLookedAt)
+        if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) & m_isLookedAt)
         {
             //Debug.Log("Pressed left click.");
-           // m_moveDirection = transform.TransformDirection(m_GazeBase);
-            m_isMoving = true;
+            // m_moveDirection = transform.TransformDirection(m_GazeBase);
+            if(!m_ScreenFade.IsFading)
+            m_ScreenFade.StartScreenFadeOut(this, m_moveTo);
+            //m_isMoving = true;
         }
 
-        if (m_isMoving)
+        /*if (m_isMoving)
         {
             Vector3 desiredPosition = m_moveTo.transform.position;
             float distance = Vector3.Distance(desiredPosition, m_Camera.transform.position);
@@ -69,11 +73,11 @@ public class GazeMover : MonoBehaviour
                     m_isMoving = false;
                     stupidCounter = 0;
                     desiredPosition = m_Camera.transform.position;
-                }*/
+                }
             } else {
                 m_isMoving = false;
             }
-        }
+        }*/
 
     }
 
@@ -81,6 +85,10 @@ public class GazeMover : MonoBehaviour
     // Public
     //==============================================================================
 
+    public void MoveTo(Transform newPosition)
+    {
+        m_Camera.transform.position = newPosition.position;
+    }
     //==============================================================================
     public void OnGazeStart()
     {
@@ -100,6 +108,5 @@ public class GazeMover : MonoBehaviour
         if (m_text != null)
             m_text.GetComponent<Renderer>().enabled = false;
     }
-
 
 }
