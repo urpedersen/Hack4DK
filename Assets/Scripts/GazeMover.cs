@@ -22,7 +22,6 @@ public class GazeMover : MonoBehaviour
 
     [SerializeField] private TextMesh m_text;
 
-    private int stupidCounter = 0;
 
     //==============================================================================
     // MonoBehaviours
@@ -43,7 +42,8 @@ public class GazeMover : MonoBehaviour
 
         m_Camera = FindObjectOfType<OVRManager>().GetComponent<Transform>();
 
-        m_text.GetComponent<Renderer>().enabled = false;
+        if(m_text != null)
+            m_text.GetComponent<Renderer>().enabled = false;
     }
 
     public void Update()
@@ -51,7 +51,7 @@ public class GazeMover : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0) & m_isLookedAt)
         {
-            Debug.Log("Pressed left click.");
+            //Debug.Log("Pressed left click.");
            // m_moveDirection = transform.TransformDirection(m_GazeBase);
             m_isMoving = true;
         }
@@ -60,16 +60,16 @@ public class GazeMover : MonoBehaviour
         {
             Vector3 desiredPosition = m_moveTo.transform.position;
             float distance = Vector3.Distance(desiredPosition, m_Camera.transform.position);
-            if (desiredPosition != m_Camera.transform.position)
+            if (distance>0.01) // desiredPosition != m_Camera.transform.position
             {
                 m_Camera.transform.position = Vector3.MoveTowards(m_Camera.transform.position, desiredPosition, distance*m_speed);
-                stupidCounter++;
-                if (stupidCounter>30)
+                //stupidCounter++;
+                /*if (stupidCounter>30)
                 {
                     m_isMoving = false;
                     stupidCounter = 0;
                     desiredPosition = m_Camera.transform.position;
-                }
+                }*/
             } else {
                 m_isMoving = false;
             }
@@ -87,7 +87,8 @@ public class GazeMover : MonoBehaviour
         m_isLookedAt = true;
 
         // Display text
-        m_text.GetComponent<Renderer>().enabled = true;
+        if (m_text != null)
+            m_text.GetComponent<Renderer>().enabled = true;
     }
 
     //==============================================================================
@@ -96,7 +97,8 @@ public class GazeMover : MonoBehaviour
         m_isLookedAt = false;
 
         // Remove text
-        m_text.GetComponent<Renderer>().enabled = false;
+        if (m_text != null)
+            m_text.GetComponent<Renderer>().enabled = false;
     }
 
 
