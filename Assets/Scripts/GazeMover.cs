@@ -64,10 +64,11 @@ public class GazeMover : MonoBehaviour
             {
                 m_Camera.transform.position = Vector3.MoveTowards(m_Camera.transform.position, desiredPosition, distance*m_speed);
                 stupidCounter++;
-                if (stupidCounter>60)
+                if (stupidCounter>30)
                 {
                     m_isMoving = false;
                     stupidCounter = 0;
+                    desiredPosition = m_Camera.transform.position;
                 }
             } else {
                 m_isMoving = false;
