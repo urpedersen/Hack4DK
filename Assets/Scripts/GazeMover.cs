@@ -68,6 +68,7 @@ public class GazeMover : MonoBehaviour
                 {
                     m_isMoving = false;
                     stupidCounter = 0;
+                    desiredPosition = m_Camera.transform.position;
                 }
             } else {
                 m_isMoving = false;
