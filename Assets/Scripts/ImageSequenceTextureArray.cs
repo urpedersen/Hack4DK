@@ -33,7 +33,7 @@ public class ImageSequenceTextureArray : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //Call the 'PlayLoop' method as a coroutine with a 0.04 delay  
         StartCoroutine("PlayLoop", 0.04f);
