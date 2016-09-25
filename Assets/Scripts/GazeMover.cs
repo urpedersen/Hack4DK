@@ -17,12 +17,13 @@ public class GazeMover : MonoBehaviour
     private bool m_isMoving;
     private bool m_isLookedAt;
 
+    private ScreenFade m_ScreenFade;
+
     private Vector3 m_moveDirection;
     [SerializeField] private float m_speed;
 
     [SerializeField] private TextMesh m_text;
 
-    private int m_StepCounter = 0;
 
     //==============================================================================
     // MonoBehaviours
@@ -35,7 +36,7 @@ public class GazeMover : MonoBehaviour
         m_GazeBase = GetComponent<GazeBase>();
         m_GazeBase.onGazeBeginCallBack += OnGazeStart;
         m_GazeBase.onGazeEndCallBack += OnGazeEnd;
-
+        m_ScreenFade = FindObjectOfType<ScreenFade>();
         m_isMoving = false;
         m_isLookedAt = false;
 
@@ -50,28 +51,33 @@ public class GazeMover : MonoBehaviour
     public void Update()
     {
         
-        if (Input.GetMouseButtonDown(0) & m_isLookedAt)
+        if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) & m_isLookedAt)
         {
             //Debug.Log("Pressed left click.");
-           // m_moveDirection = transform.TransformDirection(m_GazeBase);
-            m_isMoving = true;
+            // m_moveDirection = transform.TransformDirection(m_GazeBase);
+            if(!m_ScreenFade.IsFading)
+            m_ScreenFade.StartScreenFadeOut(this, m_moveTo);
+            //m_isMoving = true;
         }
 
-        if (m_isMoving)
+        /*if (m_isMoving)
         {
             Vector3 desiredPosition = m_moveTo.transform.position;
-            //float distance = Vector3.Distance(desiredPosition, m_Camera.transform.position);
-            if (m_StepCounter < 100000) // desiredPosition != m_Camera.transform.position
+            float distance = Vector3.Distance(desiredPosition, m_Camera.transform.position);
+            if (distance>0.01) // desiredPosition != m_Camera.transform.position
             {
-                //m_Camera.transform.position = Vector3.MoveTowards(m_Camera.transform.position, desiredPosition, distance*m_speed);
-                //m_Camera.transform.Translate((desiredPosition-m_Camera.transform.position) * Time.deltaTime  );
-                m_StepCounter++;
-
+                m_Camera.transform.position = Vector3.MoveTowards(m_Camera.transform.position, desiredPosition, distance*m_speed);
+                //stupidCounter++;
+                /*if (stupidCounter>30)
+                {
+                    m_isMoving = false;
+                    stupidCounter = 0;
+                    desiredPosition = m_Camera.transform.position;
+                }
             } else {
                 m_isMoving = false;
-                m_StepCounter = 0;
             }
-        }
+        }*/
 
     }
 
@@ -79,6 +85,10 @@ public class GazeMover : MonoBehaviour
     // Public
     //==============================================================================
 
+    public void MoveTo(Transform newPosition)
+    {
+        m_Camera.transform.position = newPosition.position;
+    }
     //==============================================================================
     public void OnGazeStart()
     {
@@ -98,6 +108,5 @@ public class GazeMover : MonoBehaviour
         if (m_text != null)
             m_text.GetComponent<Renderer>().enabled = false;
     }
-
 
 }
