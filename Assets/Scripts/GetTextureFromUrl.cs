@@ -62,7 +62,7 @@ public class GetTextureFromUrl : MonoBehaviour {
         string pictureURL = m_URL + m_GetHTMLFromUrl.GetImageUrl(random);
         WWW www = new WWW(pictureURL);
         yield return www;
-        
+        www.texture.filterMode = FilterMode.Point;
         m_Renderer.material.mainTexture = www.texture;
         m_IsReady = true;
     }
